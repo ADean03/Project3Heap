@@ -56,7 +56,11 @@ int main() {
         bTree.insert(video); // insert video into BTree
     }
 
-    bTree.traverse(); // print the contents of the BTree
+    //bTree.traverse(); // print the contents of the BTree
 
+    vector<Video> largest = bTree.findklargest(3);
+    for (int i = 0; i < largest.size(); i++) {
+        cout << largest[i].title << " - " << largest[i].views << endl;
+    }
     return 0;
 }

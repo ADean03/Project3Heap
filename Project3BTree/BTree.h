@@ -119,6 +119,37 @@ class BTree
     {
         traverse(root);
     }
+
+    //============================
+    vector<Video> findKLargest(Node* node, int k) 
+    {
+        vector<Video> result;
+        if (node == nullptr) {
+            return result;
+        }
+        if (node->isLeaf) {
+            int n = node->videos.size();
+            for (int i = n-1; i >= max(n-k, 0); i--) {
+                result.push_back(node->videos[i]);
+            }
+        }
+        else {
+            int n = node->children.size();
+            result = findKLargest(node->children[n-1], k);
+            for (int i = n-2; i >= 0 && result.size() < k; i--) {
+                vector<Video> temp = findKLargest(node->children[i], k-result.size());
+                result.insert(result.end(), temp.begin(), temp.end());
+            }
+        }
+        return result;
+    }
+
+    vector<Video> findklargest(int k)
+    {
+        return findKLargest(root, k);
+    }
+
+    //=============================
 };
 
 #endif
